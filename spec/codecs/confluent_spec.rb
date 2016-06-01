@@ -4,7 +4,7 @@ require 'avro'
 require 'logstash/codecs/avro'
 require 'logstash/event'
 
-describe LogStash::Codecs::Avro do
+describe LogStash::Codecs::Confluent do
   let (:avro_config) {{'schema_uri' => '
                         {"type": "record", "name": "Test",
                         "fields": [{"name": "foo", "type": ["null", "string"]},
@@ -12,9 +12,9 @@ describe LogStash::Codecs::Avro do
   let (:test_event) { LogStash::Event.new({"foo" => "hello", "bar" => 10}) }
 
   subject do
-    allow_any_instance_of(LogStash::Codecs::Avro).to \
+    allow_any_instance_of(LogStash::Codecs::Confluent).to \
       receive(:open_and_read).and_return(avro_config['schema_uri'])
-    next LogStash::Codecs::Avro.new(avro_config)
+    next LogStash::Codecs::Confluent.new(avro_config)
   end
 
   context "#decode" do

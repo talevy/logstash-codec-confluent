@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.authors         = ["Elastic"]
   s.email           = 'info@elastic.co'
   s.homepage        = "http://www.elastic.co/guide/en/logstash/current/index.html"
-  s.require_paths   = ["lib"]
+  s.require_paths   = ["lib", "vendor/jar-dependencies/runtime-jars"]
 
   # Files
   s.files = Dir['lib/**/*','spec/**/*','vendor/**/*','*.gemspec','*.md','CONTRIBUTORS','Gemfile','LICENSE','NOTICE.TXT']
@@ -19,11 +19,12 @@ Gem::Specification.new do |s|
   # Special flag to let us know this is actually a logstash plugin
   s.metadata = { "logstash_plugin" => "true", "logstash_group" => "codec" }
 
+  s.requirements << "jar 'io.confluent:kafka-avro-serializer', '3.0.0'"
+
   # Gem dependencies
   s.add_runtime_dependency "logstash-core-plugin-api", "~> 2.0"
 
-  s.add_runtime_dependency "avro"  #(Apache 2.0 license)
-
+  s.add_development_dependency 'jar-dependencies', '~> 0.3.2'
   s.add_development_dependency 'logstash-devutils'
 end
 
